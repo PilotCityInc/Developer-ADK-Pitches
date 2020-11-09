@@ -46,7 +46,7 @@
     <div class="module__container" :style="{ 'border-color': getColor }">
       <div class="module__title">
         <div class="module__image rounded-circle">
-          <v-icon light x-large :color="selectedColor">mdi-newspaper-variant-outline</v-icon>
+          <v-icon light x-large :color="selectedColor">mdi-elevator-passenger</v-icon>
         </div>
         <div class="module__header text-md-h5 text-sm-subtitle-1 d-flex align-center">
           <input :value="moduleName" type="text" class="module__header-text" />
@@ -137,7 +137,7 @@ export default {
     'module-preview': Module.Default
   },
   setup() {
-    const moduleName = ref('Request for Projects');
+    const moduleName = ref('Pitches');
     console.log(this); // maybe we can use exported `name:` property
     const page: Page = reactive({
       subpages: ['Setup', 'Presets', 'Monitor'],
