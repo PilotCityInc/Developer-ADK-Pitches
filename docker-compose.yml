@@ -4,10 +4,8 @@ networks:
     driver: bridge
 services:
   pitches: #in container-based development
+    image: pilotcity/boiler
     container_name: pitches
-    build: 
-      context: .
-      dockerfile: client.dockerfile 
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
