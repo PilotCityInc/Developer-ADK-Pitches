@@ -33,7 +33,15 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </div>
-    <div>
+    <v-progress-linear
+      class="module-default__collapse-divider"
+      color="#dedede"
+      height="2"
+      value="100"
+      buffer-value="100"
+      stream
+    />
+    <div class="module-edit__container">
       <v-textarea class="module-default__textarea" outlined label="One Sentence Pitch"></v-textarea>
       <br />
       <br />
@@ -41,6 +49,9 @@
       <br />
       <br />
       <v-btn x-large depressed outlined>Save</v-btn>
+      <!-- ENTER CONTENT HERE -->
+      <!-- DESIGN YOUR ACTIVITY HERE / COMMENT OUT WHEN YOU'VE STARTED DESIGNING -->
+      <!-- <div class="module-default__none">Design your activity here</div> -->
     </div>
   </v-container>
 </template>
@@ -74,6 +85,18 @@ export default {
   &__textarea {
     // width: 100%;
   }
+  &__none {
+    border-radius: 5px;
+    // border: 1px solid #dedede;
+    height: 100px;
+    text-align: center;
+    background-color: #dedede;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 18px;
+    padding-top: 35px;
+  }
+
   &__collapse-divider {
     margin-top: 15px;
     margin-bottom: 75px;
