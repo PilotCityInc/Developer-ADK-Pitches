@@ -45,7 +45,7 @@
       <div class="module-default__row mb-10">
         <v-menu open-on-hover offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" small dark color="green" depressed v-on="on"
+            <v-btn v-bind="attrs" small dark color="blue" depressed v-on="on"
               ><v-icon left>mdi-form-select</v-icon>Final Draft</v-btn
             >
           </template>
@@ -116,7 +116,7 @@
       <div class="module-default__row">
         <div><v-btn x-large outlined depressed>Save Draft</v-btn></div>
         <div class="ml-auto">
-          <v-btn x-large color="green" dark depressed>Make Final Draft</v-btn>
+          <v-btn x-large color="blue" dark depressed>Make Final Draft</v-btn>
         </div>
         <!-- <div><v-btn small disabled depressed>Current Version</v-btn></div>
         <div><v-btn small outlined depressed>Version 4</v-btn></div>
