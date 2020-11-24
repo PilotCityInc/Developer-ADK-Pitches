@@ -42,13 +42,88 @@
       stream
     />
     <div class="module-edit__container">
-      <v-textarea class="module-default__textarea" outlined label="One Sentence Pitch"></v-textarea>
+      <div class="module-default__row mb-10">
+        <v-menu open-on-hover offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" small dark color="green" depressed v-on="on"
+              ><v-icon left>mdi-form-select</v-icon>Final Draft</v-btn
+            >
+          </template>
+          <v-card class="module__menu">
+            <v-btn
+              small
+              color="white"
+              class="module__chat-menu-button v-btn__content"
+              tile
+              depressed
+            >
+              <v-icon left color="#404142">mdi-form-select</v-icon>4th Draft</v-btn
+            >
+            <v-divider></v-divider>
+            <v-btn
+              small
+              color="white"
+              class="module__chat-menu-button v-btn__content"
+              tile
+              depressed
+            >
+              <v-icon left color="#404142">mdi-form-select</v-icon>3rd Draft</v-btn
+            >
+            <v-divider></v-divider>
+            <v-btn
+              small
+              color="white"
+              class="module__chat-menu-button v-btn__content"
+              tile
+              depressed
+            >
+              <v-icon left color="#404142">mdi-form-select</v-icon>2nd Draft</v-btn
+            >
+
+            <v-divider></v-divider>
+            <v-btn
+              small
+              color="white"
+              class="module__chat-menu-button v-btn__content"
+              tile
+              depressed
+            >
+              <v-icon left color="#404142">mdi-form-select</v-icon>1st Draft</v-btn
+            >
+          </v-card>
+        </v-menu>
+      </div>
+      <v-textarea
+        placeholder="Describe your solution in one sentence"
+        prepend-inner-icon="mdi-text-short"
+        class="module-default__textarea"
+        outlined
+        rows="3"
+        row-height="30"
+        label="One Sentence Pitch"
+      ></v-textarea>
       <br />
+      <v-textarea
+        placeholder="Write your sixty second elevator pitch"
+        prepend-inner-icon="mdi-text-subject"
+        class="module-default__textarea"
+        outlined
+        rows="7"
+        row-height="70"
+        label="Elevator Pitch"
+      ></v-textarea>
       <br />
-      <v-textarea class="module-default__textarea" outlined label="Elevator Pitch"></v-textarea>
-      <br />
-      <br />
-      <v-btn x-large depressed outlined>Save</v-btn>
+      <div class="module-default__row">
+        <div><v-btn x-large outlined depressed>Save Draft</v-btn></div>
+        <div class="ml-auto">
+          <v-btn x-large color="green" dark depressed>Make Final Draft</v-btn>
+        </div>
+        <!-- <div><v-btn small disabled depressed>Current Version</v-btn></div>
+        <div><v-btn small outlined depressed>Version 4</v-btn></div>
+        <div><v-btn small outlined depressed>Version 3</v-btn></div>
+        <div><v-btn small outlined depressed>Version 2</v-btn></div>
+        <div><v-btn small outlined depressed>Version 1</v-btn></div> -->
+      </div>
       <!-- ENTER CONTENT HERE -->
       <!-- DESIGN YOUR ACTIVITY HERE / COMMENT OUT WHEN YOU'VE STARTED DESIGNING -->
       <!-- <div class="module-default__none">Design your activity here</div> -->
@@ -82,6 +157,11 @@ export default {
 
 <style lang="scss">
 .module-default {
+  &__row {
+    flex-direction: row;
+    display: flex;
+  }
+
   &__textarea {
     // width: 100%;
   }
