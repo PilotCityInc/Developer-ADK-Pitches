@@ -116,14 +116,9 @@ export default {
     'module-preview': Module.Default
   },
   setup() {
-<<<<<<< HEAD
     const moduleName = ref('Pitches');
     console.log(this); // maybe we can use exported `name:` property
     const page: Page = reactive({
-=======
-    const moduleName = ref('Request for Projects');
-    const page = reactive({
->>>>>>> d91e47bd8cafcf910e52e50b904b3af042d7e774
       subpages: ['Setup', 'Presets', 'Monitor'],
       currentPage: 'Setup'
     });
