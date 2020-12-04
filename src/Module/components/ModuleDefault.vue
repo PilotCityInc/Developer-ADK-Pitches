@@ -1,134 +1,147 @@
 <template>
-  <v-container class="module-default__container">
-    <div class="module-default__instructions">
-      <v-expansion-panels v-model="showInstructions" class="module-default__instructions" flat>
-        <v-expansion-panel>
-          <v-expansion-panel-header
-            v-show="showInstructions"
-            hide-actions
-            class="pa-0"
-            @click="showInstructions = true"
-          >
-            <template v-slot="{ open }">
-              <v-scroll-y-transition hide-on-leave>
-                <div v-if="!open" class="d-flex flex-column justify-center">
-                  <v-icon color="grey lighten-2" class="d-flex justify-center">
-                    mdi-chevron-down
-                  </v-icon>
-                  <div color="grey lighten-2" class="module-default__collapse-title">
-                    INSTRUCTIONS
+  <ValidationObserver v-slot="{ invalid }" slim>
+    <v-container class="module-default__container">
+      <div class="module-default__instructions">
+        <v-expansion-panels v-model="showInstructions" class="module-default__instructions" flat>
+          <v-expansion-panel>
+            <v-expansion-panel-header
+              v-show="showInstructions"
+              hide-actions
+              class="pa-0"
+              @click="showInstructions = true"
+            >
+              <template v-slot="{ open }">
+                <v-scroll-y-transition hide-on-leave>
+                  <div v-if="!open" class="d-flex flex-column justify-center">
+                    <v-icon color="grey lighten-2" class="d-flex justify-center">
+                      mdi-chevron-down
+                    </v-icon>
+                    <div color="grey lighten-2" class="module-default__collapse-title">
+                      INSTRUCTIONS
+                    </div>
                   </div>
-                </div>
-              </v-scroll-y-transition>
-            </template>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <Instruct readonly />
-            <div @click="showInstructions = true">
-              <div class="module-default__collapse-title">CLOSE</div>
-              <!-- <div class="hr"/> OPTIONAL -->
-              <v-icon color="grey lighten-2" class="d-flex justify-center"> mdi-chevron-up </v-icon>
-            </div>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </div>
-    <v-progress-linear
-      class="module-default__collapse-divider"
-      color="#dedede"
-      height="2"
-      value="100"
-      buffer-value="100"
-      stream
-    />
-    <div class="module-edit__container">
-      <div class="module-default__row mb-10">
-        <v-menu open-on-hover offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" small dark color="blue" depressed v-on="on"
-              ><v-icon left>mdi-form-select</v-icon>Final Draft</v-btn
-            >
-          </template>
-          <v-card class="module__menu">
-            <v-btn
-              small
-              color="white"
-              class="module__chat-menu-button v-btn__content"
-              tile
-              depressed
-            >
-              <v-icon left color="#404142">mdi-form-select</v-icon>4th Draft</v-btn
-            >
-            <v-divider></v-divider>
-            <v-btn
-              small
-              color="white"
-              class="module__chat-menu-button v-btn__content"
-              tile
-              depressed
-            >
-              <v-icon left color="#404142">mdi-form-select</v-icon>3rd Draft</v-btn
-            >
-            <v-divider></v-divider>
-            <v-btn
-              small
-              color="white"
-              class="module__chat-menu-button v-btn__content"
-              tile
-              depressed
-            >
-              <v-icon left color="#404142">mdi-form-select</v-icon>2nd Draft</v-btn
-            >
-
-            <v-divider></v-divider>
-            <v-btn
-              small
-              color="white"
-              class="module__chat-menu-button v-btn__content"
-              tile
-              depressed
-            >
-              <v-icon left color="#404142">mdi-form-select</v-icon>1st Draft</v-btn
-            >
-          </v-card>
-        </v-menu>
+                </v-scroll-y-transition>
+              </template>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <Instruct readonly />
+              <div @click="showInstructions = true">
+                <div class="module-default__collapse-title">CLOSE</div>
+                <!-- <div class="hr"/> OPTIONAL -->
+                <v-icon color="grey lighten-2" class="d-flex justify-center">
+                  mdi-chevron-up
+                </v-icon>
+              </div>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </div>
-      <v-textarea
-        placeholder="Describe your solution in one sentence"
-        prepend-inner-icon="mdi-text-short"
-        class="module-default__textarea"
-        outlined
-        rows="3"
-        row-height="30"
-        label="One Sentence Pitch"
-      ></v-textarea>
-      <br />
-      <v-textarea
-        placeholder="Write your sixty second elevator pitch"
-        prepend-inner-icon="mdi-text-subject"
-        class="module-default__textarea"
-        outlined
-        rows="7"
-        row-height="70"
-        label="Elevator Pitch"
-      ></v-textarea>
-      <br />
-      <div class="module-default__row">
-        <div><v-btn x-large outlined depressed>Save Draft</v-btn></div>
-        <div class="ml-auto">
-          <v-btn x-large color="blue" dark depressed>Make Final Draft</v-btn>
+      <v-progress-linear
+        class="module-default__collapse-divider"
+        color="#dedede"
+        height="2"
+        value="100"
+        buffer-value="100"
+        stream
+      />
+      <div class="module-edit__container">
+        <div class="module-default__row mb-10">
+          <v-menu open-on-hover offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-bind="attrs" small dark color="blue" depressed v-on="on"
+                ><v-icon left>mdi-form-select</v-icon>Final Draft</v-btn
+              >
+            </template>
+            <v-card class="module__menu">
+              <v-btn
+                small
+                color="white"
+                class="module__chat-menu-button v-btn__content"
+                tile
+                depressed
+              >
+                <v-icon left color="#404142">mdi-form-select</v-icon>4th Draft</v-btn
+              >
+              <v-divider></v-divider>
+              <v-btn
+                small
+                color="white"
+                class="module__chat-menu-button v-btn__content"
+                tile
+                depressed
+              >
+                <v-icon left color="#404142">mdi-form-select</v-icon>3rd Draft</v-btn
+              >
+              <v-divider></v-divider>
+              <v-btn
+                small
+                color="white"
+                class="module__chat-menu-button v-btn__content"
+                tile
+                depressed
+              >
+                <v-icon left color="#404142">mdi-form-select</v-icon>2nd Draft</v-btn
+              >
+
+              <v-divider></v-divider>
+              <v-btn
+                small
+                color="white"
+                class="module__chat-menu-button v-btn__content"
+                tile
+                depressed
+              >
+                <v-icon left color="#404142">mdi-form-select</v-icon>1st Draft</v-btn
+              >
+            </v-card>
+          </v-menu>
         </div>
-        <!-- <div><v-btn small disabled depressed>Current Version</v-btn></div>
+        <validation-provider v-slot="{ errors }" slim rules="max:280">
+          <v-textarea
+            v-model="onePitch"
+            :error-messages="errors"
+            placeholder="Describe your solution in one sentence"
+            prepend-inner-icon="mdi-text-short"
+            class="module-default__textarea"
+            outlined
+            rows="3"
+            row-height="30"
+            label="One Sentence Pitch"
+          ></v-textarea>
+        </validation-provider>
+
+        <br />
+        <validation-provider v-slot="{ errors }" slim rules="required">
+          <v-textarea
+            v-model="elevatorPitch"
+            :error-messages="errors"
+            placeholder="Write your sixty second elevator pitch"
+            prepend-inner-icon="mdi-text-subject"
+            class="module-default__textarea"
+            outlined
+            rows="7"
+            row-height="70"
+            label="Elevator Pitch"
+          ></v-textarea>
+        </validation-provider>
+        <br />
+        <div class="module-default__row">
+          <div><v-btn x-large outlined depressed>Save Draft</v-btn></div>
+          <div class="ml-auto">
+            <v-btn x-large color="blue" :disabled="invalid" dark depressed>Make Final Draft</v-btn>
+          </div>
+          <!-- <div><v-btn small disabled depressed>Current Version</v-btn></div>
         <div><v-btn small outlined depressed>Version 4</v-btn></div>
         <div><v-btn small outlined depressed>Version 3</v-btn></div>
         <div><v-btn small outlined depressed>Version 2</v-btn></div>
         <div><v-btn small outlined depressed>Version 1</v-btn></div> -->
+        </div>
+        <!-- ENTER CONTENT HERE -->
+        <!-- DESIGN YOUR ACTIVITY HERE / COMMENT OUT WHEN YOU'VE STARTED DESIGNING -->
+        <!-- <div class="module-default__none">Design your activity here</div> -->
       </div>
-      <!-- ENTER CONTENT HERE -->
-      <!-- DESIGN YOUR ACTIVITY HERE / COMMENT OUT WHEN YOU'VE STARTED DESIGNING -->
-      <!-- <div class="module-default__none">Design your activity here</div> -->
-    </div>
-  </v-container>
+    </v-container>
+  </ValidationObserver>
 </template>
 
 <script lang="ts">
@@ -141,7 +154,9 @@ export default {
     Instruct
   },
   apollo: {},
-  data() {
+  setup() {
+    const onePitch = ref();
+    const elevatorPitch = ref();
     const setupInstructions = ref({
       description: '',
       instructions: ['', '', '']
@@ -149,7 +164,9 @@ export default {
     const showInstructions = ref(true);
     return {
       setupInstructions,
-      showInstructions
+      showInstructions,
+      elevatorPitch,
+      onePitch
     };
   }
 };
