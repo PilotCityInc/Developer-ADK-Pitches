@@ -1,5 +1,5 @@
 import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
-import { required, email, min } from 'vee-validate/dist/rules';
+import { required, email, min, max } from 'vee-validate/dist/rules';
 
 extend('required', {
   ...required,
@@ -20,6 +20,12 @@ extend('min', {
   ...min,
   message(value, args) {
     return `Must have at least ${args.length} characters`;
+  }
+});
+extend('max', {
+  ...max,
+  message(value, args) {
+    return `you have exceeded the maximum characters.Max: ${args.length} characters`;
   }
 });
 export { ValidationObserver, ValidationProvider };
