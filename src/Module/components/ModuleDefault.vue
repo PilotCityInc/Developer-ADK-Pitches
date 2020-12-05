@@ -96,7 +96,7 @@
             </v-card>
           </v-menu>
         </div>
-        <validation-provider v-slot="{ errors }" slim rules="max:280">
+        <validation-provider v-slot="{ errors }" slim rules="max:144">
           <v-textarea
             v-model="onePitch"
             :error-messages="errors"
