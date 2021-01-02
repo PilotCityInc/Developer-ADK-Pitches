@@ -17,6 +17,7 @@
             :error-messages="errors"
             :items="group"
             label="What activity group does this belong to?"
+            disabled
             outlined
           ></v-select>
         </validation-provider>
@@ -26,6 +27,7 @@
             :error-messages="errors"
             :items="required"
             label="Is this activity required for participants to complete?"
+            disabled
             outlined
           ></v-select>
         </validation-provider>
@@ -41,6 +43,7 @@
             :error-messages="errors"
             :items="deliverable"
             label="Is this a deliverable?"
+            disabled
             outlined
           ></v-select>
         </validation-provider>
@@ -55,6 +58,7 @@
             :error-messages="errors"
             :items="endEarly"
             label="Allow participants to end program early after completion of this activity?"
+            disabled
             outlined
           ></v-select>
         </validation-provider>
@@ -120,13 +124,13 @@ export default {
     });
     const defaultActivity = reactive({
       minutes: '',
-      groupActivity: '',
-      requiredActivity: '',
+      groupActivity: 'Project',
+      requiredActivity: 'Yes',
       lockOrderActivity: '',
-      deliverableActivity: '',
+      deliverableActivity: 'Yes',
       notificationsActivity: '',
       accessibilityActivity: '',
-      endEarlyActivity: ''
+      endEarlyActivity: 'No'
     });
     const setupInstructions = ref({
       description: '',

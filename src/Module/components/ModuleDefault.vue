@@ -106,6 +106,8 @@
             outlined
             rows="3"
             row-height="30"
+            maxlength="144"
+            counter="144"
             label="One Sentence Pitch"
           ></v-textarea>
         </validation-provider>
@@ -121,6 +123,8 @@
             outlined
             rows="7"
             row-height="70"
+            maxlength="500"
+            counter="500"
             label="Elevator Pitch"
           ></v-textarea>
         </validation-provider>
