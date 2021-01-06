@@ -2,9 +2,12 @@
   "name": "@pilotcityinc/developer-adk-pitches",
   "version": "1.0.0",
   "description": "Pitches program unit",
-  "main": ".eslintrc.js",
+  "main": "/dist/index.ts",
   "directories": {
     "test": "tests"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
