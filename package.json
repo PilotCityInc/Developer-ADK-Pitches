@@ -1,6 +1,6 @@
 {
   "name": "@pilotcityinc/developer-adk-pitches",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Pitches program unit",
   "main": "/dist/index.ts",
   "directories": {

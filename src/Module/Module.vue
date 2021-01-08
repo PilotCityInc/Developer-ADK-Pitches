@@ -339,11 +339,11 @@ body {
 }
 </style>
 <script lang="ts">
-import { computed, reactive, ref, toRefs } from '@vue/composition-api';
+import { computed, reactive, ref, toRefs, defineComponent } from '@vue/composition-api';
 import '@/styles/module.scss';
 import * as Module from './components';
 
-export default {
+export default defineComponent({
   name: 'ModuleName',
 
   components: {
@@ -352,35 +352,6 @@ export default {
     'module-presets': Module.Presets,
     'module-preview': Module.Default
   },
-  data: () => ({
-    events: [],
-    input: null,
-    nonce: 0
-  }),
-
-  computed: {
-    timeline() {
-      return this.events.slice().reverse();
-    }
-  },
-
-  methods: {
-    comment() {
-      const time = new Date().toTimeString();
-      this.events.push({
-        id: this.nonce,
-        text: this.input,
-        time: time.replace(/:\d{2}\sGMT-\d{4}\s\((.*)\)/, (match, contents, offset) => {
-          return ` ${contents
-            .split(' ')
-            .map(v => v.charAt(0))
-            .join('')}`;
-        })
-      });
-      this.input = null;
-    }
-  },
-
   setup() {
     // ENTER ACTIVITY NAME BELOW
     const moduleName = ref('Pitches');
@@ -408,6 +379,38 @@ export default {
       instruct: ['']
     });
     const menu = ref(false);
+    // timelogic
+    const timedata = reactive<{
+      events: {
+        id: number;
+        text: string;
+        time: string;
+      }[];
+      input: string;
+      nonce: number;
+    }>({
+      events: [],
+      input: '',
+      nonce: 0
+    });
+    const timeline = computed(() => {
+      return timedata.events.slice().reverse();
+    });
+    function comment() {
+      const time = new Date().toTimeString();
+      timedata.events.push({
+        id: timedata.nonce,
+        text: timedata.input,
+        time: time.replace(/:\d{2}\sGMT-\d{4}\s\((.*)\)/, (match, contents) => {
+          return ` ${contents
+            .split(' ')
+            .map((v: string) => v.charAt(0))
+            .join('')}`;
+        })
+      });
+      timedata.input = '';
+    }
+
     return {
       ...toRefs(color as any),
       ...toRefs(page as any),
@@ -415,8 +418,11 @@ export default {
       moduleName,
       menu,
       getComponent,
-      getColor
+      getColor,
+      ...toRefs(timedata),
+      timeline,
+      comment
     };
   }
-};
+});
 </script>
