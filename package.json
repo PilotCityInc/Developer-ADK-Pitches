@@ -1,13 +1,10 @@
 {
-  "name": "@pilotcityinc/developer-adk-pitches",
+  "name": "developer-adk-pitches",
   "version": "1.0.4",
   "description": "Pitches program unit",
   "main": "/dist/index.ts",
   "directories": {
     "test": "tests"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
