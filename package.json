@@ -1,26 +1,13 @@
 {
-  "author": "Juxsta",
-  "license": "MIT",
-  "main": "/dist/index.ts",
   "name": "@pilotcityinc/developer-adk-pitches",
-  "version": "0.1.0",
-  "description": "PilotCity Development Kit Template for creating your own Program Activities",
+  "version": "1.0.4",
+  "description": "Pitches program unit",
+  "main": "/dist/index.ts",
+  "directories": {
+    "test": "tests"
+  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PilotCityInc/PilotCity-PDK-Boiler.git"
-  },
-  "bugs": {
-    "url": "https://github.com/PilotCityInc/PilotCity-PDK-Boiler/issues"
-  },
-  "homepage": "https://github.com/PilotCityInc/PilotCity-PDK-Boiler#readme",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
@@ -47,8 +34,7 @@
     "vee-validate": "^3.4.1",
     "vue": "^2.6.12",
     "vue-apollo": "^3.0.4y",
-    "vuetify": "^2.3.14"
-  },
+    "vuetify": "^2.3.14"},
   "devDependencies": {
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -77,7 +63,20 @@
     "vue-template-compiler": "^2.6.12",
     "vuetify-loader": "^1.6.0"
   },
-  "directories": {
-    "test": "tests"
-  }
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PilotCityInc/Developer-ADK-Pitches.git"
+  },
+  "author": "akheel-s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PilotCityInc/Developer-ADK-Pitches/issues"
+  },
+  "homepage": "https://github.com/PilotCityInc/Developer-ADK-Pitches#readme"
 }
