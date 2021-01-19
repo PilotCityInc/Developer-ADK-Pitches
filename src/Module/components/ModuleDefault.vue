@@ -1,6 +1,6 @@
 <template>
   <ValidationObserver v-slot="{ invalid }" slim>
-    <v-container class="module-default__container">
+    <v-container>
       <div class="module-default__instructions">
         <v-expansion-panels v-model="showInstructions" class="module-default__instructions" flat>
           <v-expansion-panel>
@@ -44,7 +44,7 @@
         buffer-value="100"
         stream
       />
-      <div class="module-edit__container">
+      <div>
         <div class="module-default__row mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
@@ -149,31 +149,41 @@
 </template>
 
 <script lang="ts">
-import { ref } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api';
 import Instruct from './ModuleInstruct.vue';
 
-export default {
+export default defineComponent({
   name: 'ModuleDefault',
   components: {
     Instruct
   },
-  apollo: {},
-  setup() {
-    const onePitch = ref();
-    const elevatorPitch = ref();
-    const setupInstructions = ref({
-      description: '',
-      instructions: ['', '', '']
-    });
-    const showInstructions = ref(true);
+  data() {
     return {
-      setupInstructions,
-      showInstructions,
-      elevatorPitch,
-      onePitch
+      onePitch: '',
+      elevatorPitch: '',
+      setupInstructions: {
+        description: '',
+        instructions: ['', '', '']
+      },
+      showInstructions: 'true'
     };
   }
-};
+  // setup() {
+  //   const onePitch = ref();
+  //   const elevatorPitch = ref();
+  //   const setupInstructions = ref({
+  //     description: '',
+  //     instructions: ['', '', '']
+  //   });
+  //   const showInstructions = ref(true);
+  //   return {
+  //     setupInstructions,
+  //     showInstructions,
+  //     elevatorPitch,
+  //     onePitch
+  //   };
+  // }
+});
 </script>
 
 <style lang="scss">
