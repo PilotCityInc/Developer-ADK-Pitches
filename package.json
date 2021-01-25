@@ -1,5 +1,5 @@
 {
-  "name": "@pilotcityinc/developer-adk-pitches",
+  "name": "developer-adk-pitches",
   "version": "1.0.5",
   "description": "Pitches program unit",
   "main": "/dist/index.ts",
