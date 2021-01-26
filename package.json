@@ -1,6 +1,6 @@
 {
   "name": "developer-adk-pitches",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Pitches program unit",
   "main": "/dist/index.ts",
   "author": "akheel-s",
@@ -41,7 +41,8 @@
     "vee-validate": "^3.4.1",
     "vue": "^2.6.12",
     "vue-apollo": "^3.0.4y",
-    "vuetify": "^2.3.14"},
+    "vuetify": "^2.3.14"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
