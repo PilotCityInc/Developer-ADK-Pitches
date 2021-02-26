@@ -1,13 +1,20 @@
 {
   "name": "developer-adk-pitches",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Pitches program unit",
   "main": "/dist/index.ts",
-  "directories": {
-    "test": "tests"
+  "author": "akheel-s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PilotCityInc/Developer-ADK-Pitches/issues"
   },
+  "homepage": "https://github.com/PilotCityInc/Developer-ADK-Pitches#readme",
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-beta.15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PilotCityInc/Developer-ADK-Pitches.git"
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
@@ -34,7 +41,8 @@
     "vee-validate": "^3.4.1",
     "vue": "^2.6.12",
     "vue-apollo": "^3.0.4y",
-    "vuetify": "^2.3.14"},
+    "vuetify": "^2.3.14"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -68,15 +76,5 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PilotCityInc/Developer-ADK-Pitches.git"
-  },
-  "author": "akheel-s",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/PilotCityInc/Developer-ADK-Pitches/issues"
-  },
-  "homepage": "https://github.com/PilotCityInc/Developer-ADK-Pitches#readme"
+  }
 }
