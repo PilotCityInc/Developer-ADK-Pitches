@@ -259,14 +259,9 @@ body {
 }
 </style>
 <script lang="ts">
-<<<<<<< HEAD
-import { defineComponent } from '@vue/composition-api';
-import '../styles/module.scss';
-=======
 import { computed, reactive, ref, toRefs, defineComponent } from '@vue/composition-api';
 import '../styles/module.scss';
 // import { Collection } from 'mongodb';
->>>>>>> b3440f017008cdfd1be8858491322e31299401b0
 import * as Module from './components';
 
 export default defineComponent({
