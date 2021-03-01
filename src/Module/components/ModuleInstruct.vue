@@ -85,12 +85,12 @@ export default {
     //   }
     // });
     const boilerInstructions = ref([
-      'Click resource link',
-      'Review, complete or understand resource contents',
-      'Mark completed until all finished'
+      'Write your one sentence pitch in a tweet or less',
+      'Write your elevator pitch as if you were to verbally present your idea',
+      'Save your drafts, iterate and make into final draft when ready'
     ]);
     const goal = ref([
-      'To research employer-provided resources, links, examples, possibilities & direction for projects'
+      'To effectively communicate your project in a one-sentence and written elevator pitch as if you were to walk into the elevator with your employer, customer or user'
     ]);
     // function populate() {
     //   boilerInstructions.value.push('');
