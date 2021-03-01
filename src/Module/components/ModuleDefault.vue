@@ -1,6 +1,6 @@
 <template>
   <ValidationObserver v-slot="{ invalid }" slim>
-    <v-container>
+    <div>
       <div class="module-default__instructions">
         <v-expansion-panels v-model="showInstructions" class="module-default__instructions" flat>
           <v-expansion-panel>
@@ -44,11 +44,11 @@
         buffer-value="100"
         stream
       />
-      <div>
+      <div class="pa-6">
         <div class="module-default__row mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" small dark color="blue" depressed v-on="on"
+              <v-btn rounded v-bind="attrs" dark color="blue" depressed v-on="on"
                 ><v-icon left>mdi-form-select</v-icon>Final Draft</v-btn
               >
             </template>
@@ -99,6 +99,8 @@
         <validation-provider v-slot="{ errors }" slim rules="max:144">
           <v-textarea
             v-model="onePitch"
+            rounded
+            auto-grow
             :error-messages="errors"
             placeholder="Describe your solution in one sentence"
             prepend-inner-icon="mdi-text-short"
@@ -116,6 +118,7 @@
         <validation-provider v-slot="{ errors }" slim rules="required">
           <v-textarea
             v-model="elevatorPitch"
+            rounded
             :error-messages="errors"
             placeholder="Write your sixty second elevator pitch"
             prepend-inner-icon="mdi-text-subject"
@@ -130,9 +133,11 @@
         </validation-provider>
         <br />
         <div class="module-default__row">
-          <div><v-btn x-large outlined depressed>Save Draft</v-btn></div>
+          <div><v-btn rounded x-large outlined depressed>Save Draft</v-btn></div>
           <div class="ml-auto">
-            <v-btn x-large color="blue" :disabled="invalid" dark depressed>Make Final Draft</v-btn>
+            <v-btn x-large rounded color="blue" :disabled="invalid" dark depressed
+              >Make Final Draft</v-btn
+            >
           </div>
           <!-- <div><v-btn small disabled depressed>Current Version</v-btn></div>
         <div><v-btn small outlined depressed>Version 4</v-btn></div>
@@ -144,7 +149,7 @@
         <!-- DESIGN YOUR ACTIVITY HERE / COMMENT OUT WHEN YOU'VE STARTED DESIGNING -->
         <!-- <div class="module-default__none">Design your activity here</div> -->
       </div>
-    </v-container>
+    </div>
   </ValidationObserver>
 </template>
 
@@ -210,7 +215,7 @@ export default defineComponent({
 
   &__collapse-divider {
     margin-top: 15px;
-    margin-bottom: 75px;
+    // margin-bottom: 75px;
     margin-right: none;
     margin-left: none;
     padding-right: none;
