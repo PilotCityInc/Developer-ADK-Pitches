@@ -102,7 +102,7 @@
         </div>
         <div class="module__page">
           <keep-alive>
-            <component :is="getComponent" />
+            <component :is="getComponent" v-model="programDoc" />
           </keep-alive>
         </div>
       </div>
@@ -256,34 +256,44 @@ body {
 }
 </style>
 <script lang="ts">
-import { computed, reactive, ref, toRefs, defineComponent } from '@vue/composition-api';
+import { computed, reactive, ref, toRefs, defineComponent, PropType } from '@vue/composition-api';
 import '../styles/module.scss';
 // import { Collection } from 'mongodb';
 import * as Module from './components';
+import MongoDoc from './types';
 
 export default defineComponent({
   name: 'ModuleName',
   components: {
-    'module-monitor': Module.Monitor,
+    // 'module-monitor': Module.Monitor,
     'module-setup': Module.Setup,
     'module-presets': Module.Presets,
     'module-preview': Module.Default
   },
-  //   props: {
-  // programCollection: {
-  //   required: true,
-  //   type: Object as PropType<Collection>
-  // },
-  // programId: {
-  //   require: true,
-  //   type: String
-  // }
-  //   },
-  setup() {
-    //
-    // props.programCollection.findOne({
-    //   _id: props.programId
-    // });
+  props: {
+    value: {
+      required: true,
+      type: Object as PropType<MongoDoc>
+    }
+  },
+  setup(props, ctx) {
+    const programDoc = computed({
+      get: () => props.value,
+      set: newVal => {
+        ctx.emit('input', newVal);
+      }
+    });
+
+    const index = programDoc.value.data.adks.findIndex(function findPitchObj(obj) {
+      return obj.name === 'Pitch';
+    });
+    if (index === -1) {
+      const initPitch = {
+        name: 'Pitch'
+      };
+      programDoc.value.data.adks.push(initPitch);
+    }
+
     // ENTER ACTIVITY NAME BELOW
     const moduleName = ref('Pitches');
     const page = reactive({
@@ -347,7 +357,8 @@ export default defineComponent({
       getColor,
       ...toRefs(timelineData),
       timeline,
-      comment
+      comment,
+      programDoc
     };
   }
   // setup() {

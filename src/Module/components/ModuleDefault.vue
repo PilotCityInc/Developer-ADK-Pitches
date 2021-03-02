@@ -96,7 +96,7 @@
             </v-card>
           </v-menu>
         </div>
-        <validation-provider v-slot="{ errors }" slim rules="max:144">
+        <validation-provider v-slot="{ errors }" slim rules="required">
           <v-textarea
             v-model="onePitch"
             rounded
@@ -154,23 +154,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent, computed, PropType, ref } from '@vue/composition-api';
+import { createLoader } from 'pcv4lib/src';
 import Instruct from './ModuleInstruct.vue';
+import MongoDoc from '../types';
 
 export default defineComponent({
   name: 'ModuleDefault',
   components: {
     Instruct
   },
-  data() {
+  props: {
+    value: {
+      required: true,
+      type: Object as PropType<MongoDoc>
+    }
+  },
+  seup(props, ctx) {
+    const programDoc = computed({
+      get: () => props.value,
+      set: newVal => {
+        ctx.emit('input', newVal);
+      }
+    });
+
+    const index = programDoc.value.data.adks.findIndex(function findPitchObj(obj) {
+      return obj.name === 'pitch';
+    });
+
     return {
       onePitch: '',
+      ...createLoader(programDoc.value.update, 'Saved', 'Something went wrong, try again later'),
       elevatorPitch: '',
       setupInstructions: {
         description: '',
         instructions: ['', '', '']
       },
-      showInstructions: 'true'
+      showInstructions: 'true',
+      programDoc
     };
   }
   // setup() {
