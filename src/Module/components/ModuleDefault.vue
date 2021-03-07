@@ -48,21 +48,25 @@
         <div class="module-default__row mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn rounded v-bind="attrs" dark color="blue" depressed v-on="on"
-                ><v-icon left>mdi-form-select</v-icon>Final Draft</v-btn
-              >
+              <v-btn rounded v-bind="attrs" dark color="green" depressed v-on="on"
+                ><v-icon left>mdi-form-select</v-icon>
+                {{ finalDraftSaved + ' #' + display }}
+              </v-btn>
             </template>
-            <v-card class="module__menu">
+            <v-card v-for="draft in adkData.vlaueDrafts.length" :key="draft" class="module__menu">
               <v-btn
+                v-if="draft > 1"
                 small
                 color="white"
                 class="module__chat-menu-button v-btn__content"
                 tile
                 depressed
+                @click="showDraft(draft)"
               >
-                <v-icon left color="#404142">mdi-form-select</v-icon>4th Draft</v-btn
-              >
-              <v-divider></v-divider>
+                <v-icon left color="#404142"> mdi-form-select </v-icon>
+                Draft #{{ adkData.vlaueDrafts.length + 1 - draft }}
+              </v-btn>
+              <!-- <v-divider></v-divider>
               <v-btn
                 small
                 color="white"
@@ -92,13 +96,13 @@
                 depressed
               >
                 <v-icon left color="#404142">mdi-form-select</v-icon>1st Draft</v-btn
-              >
+              > -->
             </v-card>
           </v-menu>
         </div>
         <validation-provider v-slot="{ errors }" slim rules="required">
           <v-textarea
-            v-model="onePitch"
+            v-model="adkData.vlaueDrafts[IndexVal].onePitch"
             rounded
             auto-grow
             :error-messages="errors"
@@ -117,7 +121,7 @@
         <br />
         <validation-provider v-slot="{ errors }" slim rules="required">
           <v-textarea
-            v-model="elevatorPitch"
+            v-model="adkData.vlaueDrafts[IndexVal].elevatorPitch"
             rounded
             :error-messages="errors"
             placeholder="Write your sixty second elevator pitch"
@@ -133,11 +137,30 @@
         </validation-provider>
         <br />
         <div class="module-default__row">
-          <div><v-btn rounded x-large outlined depressed>Save Draft</v-btn></div>
+          <div>
+            <v-btn rounded x-large outlined depressed @click="draftSave">Save Draft</v-btn>
+          </div>
+          <!-- <v-alert
+            v-if="draftSave"
+            type="success"
+            dismissible
+            border="left"
+            close-text="Close Alert"
+          >
+            Draft saved!
+          </v-alert> -->
           <div class="ml-auto">
-            <v-btn x-large rounded color="blue" :disabled="invalid" dark depressed
-              >Make Final Draft</v-btn
+            <v-btn
+              :disabled="invalid"
+              x-large
+              rounded
+              color="green"
+              dark
+              depressed
+              @click="finalDraft"
             >
+              Make Final Draft
+            </v-btn>
           </div>
           <!-- <div><v-btn small disabled depressed>Current Version</v-btn></div>
         <div><v-btn small outlined depressed>Version 4</v-btn></div>
@@ -154,8 +177,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType, ref } from '@vue/composition-api';
-import { createLoader } from 'pcv4lib/src';
+import { defineComponent, PropType, ref } from '@vue/composition-api';
+import { getModAdk, getModMongoDoc } from 'pcv4lib/src';
 import Instruct from './ModuleInstruct.vue';
 import MongoDoc from '../types';
 
@@ -168,30 +191,149 @@ export default defineComponent({
     value: {
       required: true,
       type: Object as PropType<MongoDoc>
+    },
+    studentDoc: {
+      required: true,
+      type: Object as PropType<MongoDoc | null>,
+      default: () => {}
     }
   },
-  seup(props, ctx) {
-    const programDoc = computed({
-      get: () => props.value,
-      set: newVal => {
-        ctx.emit('input', newVal);
-      }
-    });
+  setup(props, ctx) {
+    const studentDocument = getModMongoDoc(props, ctx.emit, {}, 'studentDoc', 'inputStudentDoc');
 
-    const index = programDoc.value.data.adks.findIndex(function findPitchObj(obj) {
-      return obj.name === 'pitch';
+    const initPitchesDefault = {
+      vlaueDrafts: [
+        {
+          onePitch: '',
+          elevatorPitch: '',
+          finalDraft: false,
+          draftIndex: '0'
+          // draftIndex: ''
+        }
+      ]
+    };
+
+    const { adkData } = getModAdk(
+      props,
+      ctx.emit,
+      'Pitches',
+      initPitchesDefault,
+      'studentDoc',
+      'inputStudentDoc'
+    );
+
+    const IndexVal = ref(adkData.value.vlaueDrafts.length - 1);
+    const display = ref(IndexVal.value + 1);
+    const finalDraftSaved = ref('Draft');
+
+    function draftSave() {
+      const draftNum = adkData.value.vlaueDrafts.length - 1;
+      const draft = ref({
+        onePitch: adkData.value.vlaueDrafts[IndexVal.value].onePitch,
+        elevatorPitch: adkData.value.vlaueDrafts[IndexVal.value].elevatorPitch,
+        finalDraft: false,
+        draftIndex: IndexVal.value + 1
+        // index: ''
+      });
+      if (adkData.value.vlaueDrafts.length - 1 <= 0) {
+        adkData.value.vlaueDrafts.push(draft.value);
+        // console.log('draft saved, first draft');
+        // console.log(adkData.value.vlaueDrafts);
+        // eslint-disable-next-line no-plusplus
+        IndexVal.value++;
+        // eslint-disable-next-line no-plusplus
+        display.value++;
+        // success = true;
+      } else if (adkData.value.vlaueDrafts.length - IndexVal.value === 2) {
+        // console.log('first item');
+      } else if (
+        adkData.value.vlaueDrafts[draftNum].onePitch !==
+          adkData.value.vlaueDrafts[draftNum - 1].onePitch ||
+        adkData.value.vlaueDrafts[draftNum].elevatorPitch !==
+          adkData.value.vlaueDrafts[draftNum - 1].elevatorPitch
+      ) {
+        adkData.value.vlaueDrafts.push(draft.value);
+        // console.log('draft saved');
+        // console.log(adkData.value.vlaueDrafts);
+        // success = true;
+        // eslint-disable-next-line no-plusplus
+        IndexVal.value++;
+        // eslint-disable-next-line no-plusplus
+        display.value++;
+      } else {
+        // console.log('duplicate data');
+        // success = false;
+      }
+    }
+
+    const indexNum = '';
+
+    const finalDraftIndex = ref('');
+    function finalDraft() {
+      // console.log('saved final draft');
+
+      // console.log(adkData.value.vlaueDrafts[IndexVal.value].finalDraft);
+      // const submittedFinal = true;
+      adkData.value.vlaueDrafts[IndexVal.value].draftIndex = IndexVal.value;
+      // console.log(adkData.value.vlaueDrafts[IndexVal.value].draftIndex);
+      adkData.value.vlaueDrafts.splice(
+        adkData.value.vlaueDrafts.length - 1,
+        0,
+        adkData.value.vlaueDrafts[IndexVal.value]
+      );
+      adkData.value.vlaueDrafts[adkData.value.vlaueDrafts.length - 1].finalDraft = true;
+      // console.log(adkData.value.vlaueDrafts[adkData.value.vlaueDrafts.length - 1].finalDraft);
+      // adkData.value.vlaueDrafts.push(draft.value);
+      // console.log(adkData.value.vlaueDrafts);
+      finalDraftSaved.value = 'Final: Draft';
+      display.value = IndexVal.value + 1;
+      // IndexVal.value = adkData.value.vlaueDrafts.length - 1;
+    }
+
+    function showDraft(draft: number) {
+      // console.log(draft - 1);
+      // IndexVal.value = draftIndex;
+      // if (IndexVal.value !== draftIndex) {
+      //   return draftIndex;
+      //   // IndexVal.value = draftIndex;
+      // }
+      // console.log(adkData.value.vlaueDrafts[draftIndex - 1].innovation);
+      // eslint-disable-next-line operator-assignment
+      IndexVal.value = adkData.value.vlaueDrafts.length - draft;
+      display.value = IndexVal.value + 1;
+      // console.log(IndexVal.value);
+      // console.log(adkData.value.vlaueDrafts[IndexVal.value].finalDraft);
+      if (adkData.value.vlaueDrafts[IndexVal.value + 1].finalDraft === true) {
+        finalDraftSaved.value = 'Final: Draft';
+        // console.log('this is a final draft');
+      } else {
+        finalDraftSaved.value = 'Draft';
+      }
+
+      return draft;
+    }
+
+    const setupInstructions = ref({
+      description: '',
+      instructions: ['', '', '']
     });
 
     return {
+      studentDocument,
       onePitch: '',
-      ...createLoader(programDoc.value.update, 'Saved', 'Something went wrong, try again later'),
       elevatorPitch: '',
-      setupInstructions: {
-        description: '',
-        instructions: ['', '', '']
-      },
+      setupInstructions,
       showInstructions: 'true',
-      programDoc
+      draftSave,
+      IndexVal,
+      finalDraft,
+      showDraft,
+      // draftNum,
+      finalDraftSaved,
+      indexNum,
+      finalDraftIndex,
+      display,
+      adkData
     };
   }
   // setup() {

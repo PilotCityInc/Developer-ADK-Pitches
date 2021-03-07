@@ -4,7 +4,7 @@ networks:
     driver: bridge
 services:
   pitches: #in container-based development
-    # image: pilotcity/boiler
+    image: pilotcity/boiler
     build: .
     container_name: pitches
     environment:
