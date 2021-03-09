@@ -3,6 +3,7 @@
     <Module
       v-model="programDocStub"
       :student-doc="studentDoc"
+      :user-doc="userDoc"
       @inputStudentDoc="studentDoc = $event"
     />
   </v-app>
@@ -50,9 +51,12 @@ export default defineComponent({
       },
       changeStream: {}
     });
+    const userTypeStub = 'organizer';
+
     return {
       programDocStub,
-      studentDoc
+      studentDoc,
+      userTypeStub
     };
   }
 });

@@ -72,7 +72,7 @@
 </template>
 
 <script lang="ts">
-import { ref, computed, defineComponent, PropType } from '@vue/composition-api';
+import { ref } from '@vue/composition-api';
 
 export default {
   name: 'ModuleInstruct',
