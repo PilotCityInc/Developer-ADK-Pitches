@@ -17,6 +17,7 @@
         class="module__navbar-button font-weight-bold"
         outlined
         small
+        rounded
         depressed
         @click="currentPage = 'preview'"
         >Preview</v-btn
@@ -26,6 +27,7 @@
         class="module__navbar-button font-weight-bold"
         dark
         small
+        rounded
         depressed
         color="red"
         @click="currentPage = 'setup'"
