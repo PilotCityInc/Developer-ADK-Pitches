@@ -2,6 +2,7 @@
   <v-app>
     <Module
       v-model="programDocStub"
+      :user-type="userTypeStub"
       :student-doc="studentDoc"
       :user-doc="userDoc"
       @inputStudentDoc="studentDoc = $event"
