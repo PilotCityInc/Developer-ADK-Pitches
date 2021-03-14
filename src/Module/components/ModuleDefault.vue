@@ -150,15 +150,7 @@
             Draft saved!
           </v-alert> -->
           <div class="ml-auto">
-            <v-btn
-              :disabled="invalid"
-              x-large
-              rounded
-              color="green"
-              dark
-              depressed
-              @click="finalDraft"
-            >
+            <v-btn :disabled="invalid" x-large rounded color="green" depressed @click="finalDraft">
               Make Final Draft
             </v-btn>
           </div>
@@ -179,6 +171,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/composition-api';
 import { getModAdk, getModMongoDoc } from 'pcv4lib/src';
+import Swal from 'sweetalert2';
 import Instruct from './ModuleInstruct.vue';
 import MongoDoc from '../types';
 
@@ -235,34 +228,60 @@ export default defineComponent({
         draftIndex: IndexVal.value + 1
         // index: ''
       });
-      if (adkData.value.vlaueDrafts.length - 1 <= 0) {
-        adkData.value.vlaueDrafts.push(draft.value);
-        // console.log('draft saved, first draft');
-        // console.log(adkData.value.vlaueDrafts);
-        // eslint-disable-next-line no-plusplus
-        IndexVal.value++;
-        // eslint-disable-next-line no-plusplus
-        display.value++;
-        // success = true;
-      } else if (adkData.value.vlaueDrafts.length - IndexVal.value === 2) {
-        // console.log('first item');
-      } else if (
-        adkData.value.vlaueDrafts[draftNum].onePitch !==
-          adkData.value.vlaueDrafts[draftNum - 1].onePitch ||
-        adkData.value.vlaueDrafts[draftNum].elevatorPitch !==
-          adkData.value.vlaueDrafts[draftNum - 1].elevatorPitch
+      if (
+        adkData.value.vlaueDrafts[IndexVal.value].onePitch.length !== 0 ||
+        adkData.value.vlaueDrafts[IndexVal.value].elevatorPitch.length !== 0
       ) {
-        adkData.value.vlaueDrafts.push(draft.value);
-        // console.log('draft saved');
-        // console.log(adkData.value.vlaueDrafts);
-        // success = true;
-        // eslint-disable-next-line no-plusplus
-        IndexVal.value++;
-        // eslint-disable-next-line no-plusplus
-        display.value++;
+        if (adkData.value.vlaueDrafts.length - 1 <= 0) {
+          adkData.value.vlaueDrafts.push(draft.value);
+          // console.log('draft saved, first draft');
+          // console.log(adkData.value.vlaueDrafts);
+          // eslint-disable-next-line no-plusplus
+          IndexVal.value++;
+          // eslint-disable-next-line no-plusplus
+          display.value++;
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Your draft has been successfully saved!'
+          });
+          // success = true;
+        } else if (adkData.value.vlaueDrafts.length - IndexVal.value === 2) {
+          // console.log('first item');
+        } else if (
+          adkData.value.vlaueDrafts[draftNum].onePitch !==
+            adkData.value.vlaueDrafts[draftNum - 1].onePitch ||
+          adkData.value.vlaueDrafts[draftNum].elevatorPitch !==
+            adkData.value.vlaueDrafts[draftNum - 1].elevatorPitch
+        ) {
+          adkData.value.vlaueDrafts.push(draft.value);
+          // console.log('draft saved');
+          // console.log(adkData.value.vlaueDrafts);
+          // success = true;
+          // eslint-disable-next-line no-plusplus
+          IndexVal.value++;
+          // eslint-disable-next-line no-plusplus
+          display.value++;
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Your draft has been successfully saved!'
+          });
+        } else {
+          // console.log('duplicate data');
+          // success = false;
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Your draft has been successfully saved!'
+          });
+        }
       } else {
-        // console.log('duplicate data');
-        // success = false;
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'You forgot to write something in!'
+        });
       }
     }
 
@@ -287,6 +306,11 @@ export default defineComponent({
       // console.log(adkData.value.vlaueDrafts);
       finalDraftSaved.value = 'Final: Draft';
       display.value = IndexVal.value + 1;
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Successfully marked as final draft!'
+      });
       // IndexVal.value = adkData.value.vlaueDrafts.length - 1;
     }
 

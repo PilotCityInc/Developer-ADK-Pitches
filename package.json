@@ -39,6 +39,7 @@
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
     "rollup-plugin-vue": "^6.0.0-beta.11",
+    "sweetalert2": "^10.15.5",
     "vee-validate": "^3.4.1",
     "vue": "^2.6.12",
     "vue-apollo": "^3.0.4y",
