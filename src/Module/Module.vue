@@ -13,19 +13,21 @@
         >00:00:00</v-btn
       > -->
       <v-btn
-        v-if="currentPage != 'preview'"
-        class="module__navbar-button"
+        v-if="currentPage != 'preview' && userType === 'organizer'"
+        class="module__navbar-button font-weight-bold"
         outlined
-        x-small
+        small
+        rounded
         depressed
         @click="currentPage = 'preview'"
         >Preview</v-btn
       >
       <v-btn
-        v-if="currentPage == 'preview'"
-        class="module__navbar-button"
+        v-if="currentPage == 'preview' && userType === 'organizer'"
+        class="module__navbar-button font-weight-bold"
         dark
-        x-small
+        small
+        rounded
         depressed
         color="red"
         @click="currentPage = 'setup'"
@@ -281,6 +283,13 @@ export default defineComponent({
       required: true,
       type: Object as PropType<MongoDoc>
     },
+    userType: {
+      required: true,
+      type: String
+      // participant: '',
+      // organizer: '',
+      // stakeholder: ''
+    },
     studentDoc: {
       required: true,
       type: Object as PropType<MongoDoc | null>,
@@ -296,6 +305,11 @@ export default defineComponent({
       subpages: ['Setup', 'Presets'],
       currentPage: 'Setup'
     });
+    if (props.userType === 'organizer') {
+      page.currentPage = 'setup';
+    } else {
+      page.currentPage = 'preview';
+    }
     const getComponent = computed(() => {
       return `module-${page.currentPage.toLowerCase()}`;
     });
