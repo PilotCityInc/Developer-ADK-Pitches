@@ -1,6 +1,6 @@
 <template>
   <!--  TODO: make the inputs into actual components -->
-  <v-container class="module-default pa-0">
+  <v-container class="module">
     <div class="module__navbar">
       <!-- <v-btn
         v-if="currentPage == 'preview'"
