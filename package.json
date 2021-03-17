@@ -1,6 +1,6 @@
 {
   "name": "developer-adk-pitches",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Pitches program unit",
   "main": "/dist/index.ts",
   "author": "akheel-s",
