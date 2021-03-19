@@ -154,7 +154,7 @@ export default defineComponent({
   }
 
   &__reflection {
-    margin-left: auto;
+    // margin-left: auto;
   }
 
   &__divider {

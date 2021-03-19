@@ -297,7 +297,7 @@ export default defineComponent({
     const studentDocument = getModMongoDoc(props, ctx.emit, {}, 'studentDoc', 'inputStudentDoc');
 
     // ENTER ACTIVITY NAME BELOW
-    const moduleName = ref('Pitches');
+    const moduleName = ref('Pitch');
     const page = reactive({
       subpages: ['Setup', 'Presets'],
       currentPage: 'Setup'
