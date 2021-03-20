@@ -71,10 +71,7 @@
           <v-icon light x-large :color="selectedColor">mdi-elevator-passenger</v-icon>
         </div>
         <div class="module__header text-md-h5 text-sm-subtitle-1 d-flex align-center">
-          <input disabled :value="moduleName" type="text" class="module__header-text" />
-          <v-chip-group class="module__header-chips"
-            ><v-chip color="white" disabled dark x-small>Preset Tags</v-chip>
-          </v-chip-group>
+          <input disabled :value="moduleName" type="text" class="module__header-text mb-5" />
         </div>
       </div>
       <div class="module__body">
@@ -238,7 +235,7 @@ body {
   height: 100%;
 }
 .v-timeline-item__divider {
-  align-items: start !important;
+  // align-items: start !important;
 }
 .module {
   &__trash {
@@ -300,7 +297,7 @@ export default defineComponent({
     const studentDocument = getModMongoDoc(props, ctx.emit, {}, 'studentDoc', 'inputStudentDoc');
 
     // ENTER ACTIVITY NAME BELOW
-    const moduleName = ref('Pitches');
+    const moduleName = ref('Pitch');
     const page = reactive({
       subpages: ['Setup', 'Presets'],
       currentPage: 'Setup'
