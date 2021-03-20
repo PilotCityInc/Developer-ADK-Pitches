@@ -224,7 +224,7 @@ export default defineComponent({
     );
 
     const IndexVal = ref(adkData.value.vlaueDrafts.length - 1);
-    const display = ref(IndexVal.value + 1);
+    const display = ref(IndexVal.value);
     const finalDraftSaved = ref('Draft');
 
     function draftSave() {
