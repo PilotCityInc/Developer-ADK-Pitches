@@ -45,7 +45,7 @@
         stream
       />
       <div class="pa-6">
-        <div class="module-default__row mb-10">
+        <div class="mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn rounded v-bind="attrs" dark color="blue" depressed v-on="on"
@@ -58,8 +58,8 @@
                 v-if="draft > 1"
                 small
                 color="white"
-                class="module__chat-menu-button v-btn__content"
-                tile
+                class=""
+                rounded
                 depressed
                 @click="showDraft(draft)"
               >
@@ -138,7 +138,7 @@
           ></v-textarea>
         </validation-provider>
         <br />
-        <div class="module-default__row">
+        <div class="d-flex flex-row">
           <div>
             <v-btn
               :disabled="userType === 'stakeholder'"
