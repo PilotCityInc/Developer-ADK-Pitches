@@ -105,6 +105,7 @@
               :is="getComponent"
               v-model="studentDoc"
               :student-doc="studentDoc"
+              :user-type="userType"
               @inputStudentDoc="$emit('inputStudentDoc', $event)"
             />
           </keep-alive>

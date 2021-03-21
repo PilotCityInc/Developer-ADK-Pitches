@@ -114,6 +114,7 @@
             row-height="30"
             maxlength="144"
             counter="144"
+            :readonly="userType === 'stakeholder'"
             label="One Sentence Pitch"
           ></v-textarea>
         </validation-provider>
@@ -132,13 +133,22 @@
             row-height="70"
             maxlength="500"
             counter="500"
+            :readonly="userType === 'stakeholder'"
             label="Elevator Pitch"
           ></v-textarea>
         </validation-provider>
         <br />
         <div class="module-default__row">
           <div>
-            <v-btn rounded x-large outlined depressed @click="draftSave">Save Draft</v-btn>
+            <v-btn
+              :disabled="userType === 'stakeholder'"
+              rounded
+              x-large
+              outlined
+              depressed
+              @click="draftSave"
+              >Save Draft</v-btn
+            >
           </div>
           <!-- <v-alert
             v-if="draftSave"
@@ -151,12 +161,12 @@
           </v-alert> -->
           <div class="ml-auto">
             <v-btn
-              :disabled="invalid"
               x-large
               rounded
               color="blue"
               dark
               depressed
+              :disabled="invaid || userType === 'stakeholder'"
               @click="finalDraft"
             >
               Make Final Draft
@@ -321,8 +331,8 @@ export default defineComponent({
       });
       adkData.value.update(() => ({
         isComplete: true,
-        adkIndex: adkIndex
-      }))
+        adkIndex
+      }));
       // IndexVal.value = adkData.value.vlaueDrafts.length - 1;
     }
 
