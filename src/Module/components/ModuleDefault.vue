@@ -48,7 +48,7 @@
         <div class="mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn rounded v-bind="attrs" dark color="blue" depressed v-on="on"
+              <v-btn small rounded v-bind="attrs" dark color="blue" depressed v-on="on"
                 ><v-icon left>mdi-form-select</v-icon>
                 {{ finalDraftSaved + ' #' + display }}
               </v-btn>
