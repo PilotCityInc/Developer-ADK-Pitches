@@ -45,10 +45,10 @@
         stream
       />
       <div class="pa-6">
-        <div class="module-default__row mb-10">
+        <div class="mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn rounded v-bind="attrs" dark color="blue" depressed v-on="on"
+              <v-btn small rounded v-bind="attrs" dark color="blue" depressed v-on="on"
                 ><v-icon left>mdi-form-select</v-icon>
                 {{ finalDraftSaved + ' #' + display }}
               </v-btn>
@@ -58,8 +58,8 @@
                 v-if="draft > 1"
                 small
                 color="white"
-                class="module__chat-menu-button v-btn__content"
-                tile
+                class=""
+                rounded
                 depressed
                 @click="showDraft(draft)"
               >
@@ -114,6 +114,7 @@
             row-height="30"
             maxlength="144"
             counter="144"
+            :readonly="userType === 'stakeholder'"
             label="One Sentence Pitch"
           ></v-textarea>
         </validation-provider>
@@ -132,13 +133,22 @@
             row-height="70"
             maxlength="500"
             counter="500"
+            :readonly="userType === 'stakeholder'"
             label="Elevator Pitch"
           ></v-textarea>
         </validation-provider>
         <br />
-        <div class="module-default__row">
+        <div class="d-flex flex-row">
           <div>
-            <v-btn rounded x-large outlined depressed @click="draftSave">Save Draft</v-btn>
+            <v-btn
+              :disabled="userType === 'stakeholder'"
+              rounded
+              x-large
+              outlined
+              depressed
+              @click="draftSave"
+              >Save Draft</v-btn
+            >
           </div>
           <!-- <v-alert
             v-if="draftSave"
@@ -151,12 +161,12 @@
           </v-alert> -->
           <div class="ml-auto">
             <v-btn
-              :disabled="invalid"
               x-large
               rounded
               color="blue"
               dark
               depressed
+              :disabled="invalid || userType === 'stakeholder'"
               @click="finalDraft"
             >
               Make Final Draft
@@ -196,6 +206,13 @@ export default defineComponent({
     readonly: {
       required: false,
       default: false
+    },
+    userType: {
+      required: true,
+      type: String
+      // participant: '',
+      // organizer: '',
+      // stakeholder: ''
     }
   },
   setup(props, ctx) {
@@ -220,8 +237,8 @@ export default defineComponent({
       'inputTeamDoc'
     );
 
-    const IndexVal = ref(adkData.value.valueDrafts.length - 1);
-    const display = ref(IndexVal.value + 1);
+    const IndexVal = ref(adkData.value.vlaueDrafts.length - 1);
+    const display = ref(IndexVal.value);
     const finalDraftSaved = ref('Draft');
 
     function draftSave() {
@@ -320,7 +337,11 @@ export default defineComponent({
         title: 'Success!',
         text: 'Successfully marked as final draft!'
       });
-      // IndexVal.value = adkData.value.valueDrafts.length - 1;
+      adkData.value.update(() => ({
+        isComplete: true,
+        adkIndex
+      }));
+      // IndexVal.value = adkData.value.vlaueDrafts.length - 1;
     }
 
     function showDraft(draft: number) {
