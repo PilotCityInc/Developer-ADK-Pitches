@@ -3,9 +3,9 @@
     <Module
       v-model="programDocStub"
       :user-type="userTypeStub"
-      :student-doc="studentDoc"
-      :user-doc="userDoc"
-      @inputStudentDoc="studentDoc = $event"
+      :team-doc="teamDoc"
+      :readonly="readonly"
+      @inputTeamDoc="teamDoc = $event"
     />
   </v-app>
 </template>
@@ -38,7 +38,7 @@ export default defineComponent({
       },
       changeStream: {}
     });
-    const studentDoc: Ref<MongoDoc> = ref({
+    const teamDoc: Ref<MongoDoc> = ref({
       data: {
         adks: []
       },
@@ -52,12 +52,15 @@ export default defineComponent({
       },
       changeStream: {}
     });
-    const userTypeStub = 'organizer';
+    const userTypeStub = 'participant';
+    if (userTypeStub === 'organizer') teamDoc.value = null;
+    const readonly = ref(userTypeStub === 'stakeholder');
 
     return {
       programDocStub,
-      studentDoc,
-      userTypeStub
+      teamDoc,
+      userTypeStub,
+      readonly
     };
   }
 });

@@ -53,7 +53,7 @@
                 {{ finalDraftSaved + ' #' + display }}
               </v-btn>
             </template>
-            <v-card v-for="draft in adkData.vlaueDrafts.length" :key="draft" class="module__menu">
+            <v-card v-for="draft in adkData.valueDrafts.length" :key="draft" class="module__menu">
               <v-btn
                 v-if="draft > 1"
                 small
@@ -64,7 +64,7 @@
                 @click="showDraft(draft)"
               >
                 <v-icon left color="#404142"> mdi-form-select </v-icon>
-                Draft #{{ adkData.vlaueDrafts.length + 1 - draft }}
+                Draft #{{ adkData.valueDrafts.length + 1 - draft }}
               </v-btn>
               <!-- <v-divider></v-divider>
               <v-btn
@@ -102,7 +102,7 @@
         </div>
         <validation-provider v-slot="{ errors }" slim rules="required">
           <v-textarea
-            v-model="adkData.vlaueDrafts[IndexVal].onePitch"
+            v-model="adkData.valueDrafts[IndexVal].onePitch"
             rounded
             auto-grow
             :error-messages="errors"
@@ -121,7 +121,7 @@
         <br />
         <validation-provider v-slot="{ errors }" slim rules="required">
           <v-textarea
-            v-model="adkData.vlaueDrafts[IndexVal].elevatorPitch"
+            v-model="adkData.valueDrafts[IndexVal].elevatorPitch"
             rounded
             :error-messages="errors"
             placeholder="Write your sixty second elevator pitch"
@@ -178,7 +178,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/composition-api';
-import { getModAdk, getModMongoDoc } from 'pcv4lib/src';
+import { getModAdk } from 'pcv4lib/src';
 import Swal from 'sweetalert2';
 import Instruct from './ModuleInstruct.vue';
 import MongoDoc from '../types';
@@ -189,21 +189,18 @@ export default defineComponent({
     Instruct
   },
   props: {
-    value: {
+    teamDoc: {
       required: true,
       type: Object as PropType<MongoDoc>
     },
-    studentDoc: {
-      required: true,
-      type: Object as PropType<MongoDoc | null>,
-      default: () => {}
+    readonly: {
+      required: false,
+      default: false
     }
   },
   setup(props, ctx) {
-    const studentDocument = getModMongoDoc(props, ctx.emit, {}, 'studentDoc', 'inputStudentDoc');
-
     const initPitchesDefault = {
-      vlaueDrafts: [
+      valueDrafts: [
         {
           onePitch: '',
           elevatorPitch: '',
@@ -214,36 +211,36 @@ export default defineComponent({
       ]
     };
 
-    const { adkData } = getModAdk(
+    const { adkData, adkIndex } = getModAdk(
       props,
       ctx.emit,
       'Pitches',
       initPitchesDefault,
-      'studentDoc',
-      'inputStudentDoc'
+      'teamDoc',
+      'inputTeamDoc'
     );
 
-    const IndexVal = ref(adkData.value.vlaueDrafts.length - 1);
+    const IndexVal = ref(adkData.value.valueDrafts.length - 1);
     const display = ref(IndexVal.value + 1);
     const finalDraftSaved = ref('Draft');
 
     function draftSave() {
-      const draftNum = adkData.value.vlaueDrafts.length - 1;
+      const draftNum = adkData.value.valueDrafts.length - 1;
       const draft = ref({
-        onePitch: adkData.value.vlaueDrafts[IndexVal.value].onePitch,
-        elevatorPitch: adkData.value.vlaueDrafts[IndexVal.value].elevatorPitch,
+        onePitch: adkData.value.valueDrafts[IndexVal.value].onePitch,
+        elevatorPitch: adkData.value.valueDrafts[IndexVal.value].elevatorPitch,
         finalDraft: false,
         draftIndex: IndexVal.value + 1
         // index: ''
       });
       if (
-        adkData.value.vlaueDrafts[IndexVal.value].onePitch.length !== 0 ||
-        adkData.value.vlaueDrafts[IndexVal.value].elevatorPitch.length !== 0
+        adkData.value.valueDrafts[IndexVal.value].onePitch.length !== 0 ||
+        adkData.value.valueDrafts[IndexVal.value].elevatorPitch.length !== 0
       ) {
-        if (adkData.value.vlaueDrafts.length - 1 <= 0) {
-          adkData.value.vlaueDrafts.push(draft.value);
+        if (adkData.value.valueDrafts.length - 1 <= 0) {
+          adkData.value.valueDrafts.push(draft.value);
           // console.log('draft saved, first draft');
-          // console.log(adkData.value.vlaueDrafts);
+          // console.log(adkData.value.valueDrafts);
           // eslint-disable-next-line no-plusplus
           IndexVal.value++;
           // eslint-disable-next-line no-plusplus
@@ -254,17 +251,17 @@ export default defineComponent({
             text: 'Your draft has been successfully saved!'
           });
           // success = true;
-        } else if (adkData.value.vlaueDrafts.length - IndexVal.value === 2) {
+        } else if (adkData.value.valueDrafts.length - IndexVal.value === 2) {
           // console.log('first item');
         } else if (
-          adkData.value.vlaueDrafts[draftNum].onePitch !==
-            adkData.value.vlaueDrafts[draftNum - 1].onePitch ||
-          adkData.value.vlaueDrafts[draftNum].elevatorPitch !==
-            adkData.value.vlaueDrafts[draftNum - 1].elevatorPitch
+          adkData.value.valueDrafts[draftNum].onePitch !==
+            adkData.value.valueDrafts[draftNum - 1].onePitch ||
+          adkData.value.valueDrafts[draftNum].elevatorPitch !==
+            adkData.value.valueDrafts[draftNum - 1].elevatorPitch
         ) {
-          adkData.value.vlaueDrafts.push(draft.value);
+          adkData.value.valueDrafts.push(draft.value);
           // console.log('draft saved');
-          // console.log(adkData.value.vlaueDrafts);
+          // console.log(adkData.value.valueDrafts);
           // success = true;
           // eslint-disable-next-line no-plusplus
           IndexVal.value++;
@@ -299,27 +296,31 @@ export default defineComponent({
     function finalDraft() {
       // console.log('saved final draft');
 
-      // console.log(adkData.value.vlaueDrafts[IndexVal.value].finalDraft);
+      // console.log(adkData.value.valueDrafts[IndexVal.value].finalDraft);
       // const submittedFinal = true;
-      adkData.value.vlaueDrafts[IndexVal.value].draftIndex = IndexVal.value;
-      // console.log(adkData.value.vlaueDrafts[IndexVal.value].draftIndex);
-      adkData.value.vlaueDrafts.splice(
-        adkData.value.vlaueDrafts.length - 1,
+      adkData.value.valueDrafts[IndexVal.value].draftIndex = IndexVal.value;
+      // console.log(adkData.value.valueDrafts[IndexVal.value].draftIndex);
+      adkData.value.valueDrafts.splice(
+        adkData.value.valueDrafts.length - 1,
         0,
-        adkData.value.vlaueDrafts[IndexVal.value]
+        adkData.value.valueDrafts[IndexVal.value]
       );
-      adkData.value.vlaueDrafts[adkData.value.vlaueDrafts.length - 1].finalDraft = true;
-      // console.log(adkData.value.vlaueDrafts[adkData.value.vlaueDrafts.length - 1].finalDraft);
-      // adkData.value.vlaueDrafts.push(draft.value);
-      // console.log(adkData.value.vlaueDrafts);
+      adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft = true;
+      // console.log(adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft);
+      // adkData.value.valueDrafts.push(draft.value);
+      // console.log(adkData.value.valueDrafts);
       finalDraftSaved.value = 'Final: Draft';
       display.value = IndexVal.value + 1;
+      props.teamDoc.update(() => ({
+        isComplete: true,
+        adkIndex
+      }));
       Swal.fire({
         icon: 'success',
         title: 'Success!',
         text: 'Successfully marked as final draft!'
       });
-      // IndexVal.value = adkData.value.vlaueDrafts.length - 1;
+      // IndexVal.value = adkData.value.valueDrafts.length - 1;
     }
 
     function showDraft(draft: number) {
@@ -329,13 +330,13 @@ export default defineComponent({
       //   return draftIndex;
       //   // IndexVal.value = draftIndex;
       // }
-      // console.log(adkData.value.vlaueDrafts[draftIndex - 1].innovation);
+      // console.log(adkData.value.valueDrafts[draftIndex - 1].innovation);
       // eslint-disable-next-line operator-assignment
-      IndexVal.value = adkData.value.vlaueDrafts.length - draft;
+      IndexVal.value = adkData.value.valueDrafts.length - draft;
       display.value = IndexVal.value + 1;
       // console.log(IndexVal.value);
-      // console.log(adkData.value.vlaueDrafts[IndexVal.value].finalDraft);
-      if (adkData.value.vlaueDrafts[IndexVal.value + 1].finalDraft === true) {
+      // console.log(adkData.value.valueDrafts[IndexVal.value].finalDraft);
+      if (adkData.value.valueDrafts[IndexVal.value + 1].finalDraft === true) {
         finalDraftSaved.value = 'Final: Draft';
         // console.log('this is a final draft');
       } else {
@@ -351,7 +352,6 @@ export default defineComponent({
     });
 
     return {
-      studentDocument,
       onePitch: '',
       elevatorPitch: '',
       setupInstructions,

@@ -1,5 +1,5 @@
 # This dockerfile is meant for in-container development
-FROM node:12.19.0
+FROM node:14.16.0
 WORKDIR /usr/src/app
 
 # Install the application's dependencies into the node_modules's cache directory.

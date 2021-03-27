@@ -103,9 +103,9 @@
           <keep-alive>
             <component
               :is="getComponent"
-              v-model="studentDoc"
-              :student-doc="studentDoc"
-              @inputStudentDoc="$emit('inputStudentDoc', $event)"
+              :team-doc="teamDoc || { data: { adks: [] } }"
+              :user-type="userType"
+              :readonly="readonly"
             />
           </keep-alive>
         </div>
@@ -263,7 +263,6 @@ body {
 import { computed, reactive, ref, toRefs, defineComponent, PropType } from '@vue/composition-api';
 import '../styles/module.scss';
 // import { Collection } from 'mongodb';
-import { getModMongoDoc } from 'pcv4lib/src';
 import * as Module from './components';
 import MongoDoc from './types';
 
@@ -287,15 +286,15 @@ export default defineComponent({
       // organizer: '',
       // stakeholder: ''
     },
-    studentDoc: {
-      required: true,
-      type: Object as PropType<MongoDoc | null>,
-      default: () => {}
+    teamDoc: {
+      required: true
+    },
+    readonly: {
+      required: false,
+      default: false
     }
   },
-  setup(props, ctx) {
-    const studentDocument = getModMongoDoc(props, ctx.emit, {}, 'studentDoc', 'inputStudentDoc');
-
+  setup(props) {
     // ENTER ACTIVITY NAME BELOW
     const moduleName = ref('Pitch');
     const page = reactive({
@@ -364,8 +363,7 @@ export default defineComponent({
       getColor,
       ...toRefs(timelineData),
       timeline,
-      comment,
-      studentDocument
+      comment
     };
   }
   // setup() {
