@@ -236,12 +236,12 @@ export default defineComponent({
       'teamDoc',
       'inputTeamDoc'
     );
-
-    const IndexVal = ref(adkData.value.vlaueDrafts.length - 1);
+    console.log(adkData.value);
+    const IndexVal = ref(adkData.value.valueDrafts.length - 1);
     const display = ref(IndexVal.value);
     const finalDraftSaved = ref('Draft');
 
-    function draftSave() {
+    async function draftSave() {
       const draftNum = adkData.value.valueDrafts.length - 1;
       const draft = ref({
         onePitch: adkData.value.valueDrafts[IndexVal.value].onePitch,
@@ -262,6 +262,7 @@ export default defineComponent({
           IndexVal.value++;
           // eslint-disable-next-line no-plusplus
           display.value++;
+          await adkData.value.update();
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -284,6 +285,7 @@ export default defineComponent({
           IndexVal.value++;
           // eslint-disable-next-line no-plusplus
           display.value++;
+          await adkData.value.update();
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -292,6 +294,7 @@ export default defineComponent({
         } else {
           // console.log('duplicate data');
           // success = false;
+          await adkData.value.update();
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -310,7 +313,7 @@ export default defineComponent({
     const indexNum = '';
 
     const finalDraftIndex = ref('');
-    function finalDraft() {
+    async function finalDraft() {
       // console.log('saved final draft');
 
       // console.log(adkData.value.valueDrafts[IndexVal.value].finalDraft);
@@ -332,16 +335,17 @@ export default defineComponent({
         isComplete: true,
         adkIndex
       }));
+      await adkData.value.update(() => ({
+        isComplete: true,
+        adkIndex
+      }));
       Swal.fire({
         icon: 'success',
         title: 'Success!',
         text: 'Successfully marked as final draft!'
       });
-      adkData.value.update(() => ({
-        isComplete: true,
-        adkIndex
-      }));
-      // IndexVal.value = adkData.value.vlaueDrafts.length - 1;
+
+      // IndexVal.value = adkData.value.valueDrafts.length - 1;
     }
 
     function showDraft(draft: number) {
