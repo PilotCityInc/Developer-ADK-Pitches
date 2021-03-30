@@ -330,7 +330,7 @@ export default defineComponent({
       // console.log(adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft);
       // adkData.value.valueDrafts.push(draft.value);
       // console.log(adkData.value.valueDrafts);
-      finalDraftSaved.value = 'Final: Draft';
+      finalDraftSaved.value = 'Final Draft';
       display.value = IndexVal.value + 1;
       props.teamDoc.update(() => ({
         isComplete: true,
@@ -363,7 +363,7 @@ export default defineComponent({
       // console.log(IndexVal.value);
       // console.log(adkData.value.valueDrafts[IndexVal.value].finalDraft);
       if (adkData.value.valueDrafts[IndexVal.value + 1].finalDraft === true) {
-        finalDraftSaved.value = 'Final: Draft';
+        finalDraftSaved.value = 'Final Draft';
         // console.log('this is a final draft');
       } else {
         finalDraftSaved.value = 'Draft';
