@@ -48,7 +48,7 @@
         <div class="mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn small rounded v-bind="attrs" dark color="blue" depressed v-on="on"
+              <v-btn small class="font-weight-bold" rounded v-bind="attrs" dark depressed v-on="on"
                 ><v-icon left>mdi-form-select</v-icon>
                 {{ finalDraftSaved + ' #' + display }}
               </v-btn>
@@ -56,9 +56,10 @@
             <v-card v-for="draft in adkData.valueDrafts.length" :key="draft" class="module__menu">
               <v-btn
                 v-if="draft > 1"
+                outlined
                 small
-                color="white"
-                class=""
+                class="draft-button mt-2 mb-1"
+                width="100%"
                 rounded
                 depressed
                 @click="showDraft(draft)"
@@ -163,8 +164,8 @@
             <v-btn
               x-large
               rounded
-              color="blue"
               dark
+              class="font-weight-bold"
               depressed
               :disabled="invalid || userType === 'stakeholder'"
               @click="finalDraft"
@@ -412,6 +413,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.draft-button {
+  &.v-menu__content {
+    box-shadow: none;
+  }
+}
+
 .module-default {
   &__row {
     flex-direction: row;
