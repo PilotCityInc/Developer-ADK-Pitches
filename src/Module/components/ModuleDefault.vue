@@ -217,7 +217,7 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const initPitchesDefault = {
+    const initPitchDefault = {
       valueDrafts: [
         {
           onePitch: '',
@@ -232,8 +232,8 @@ export default defineComponent({
     const { adkData, adkIndex } = getModAdk(
       props,
       ctx.emit,
-      'Pitches',
-      initPitchesDefault,
+      'Pitch',
+      initPitchDefault,
       'teamDoc',
       'inputTeamDoc'
     );
