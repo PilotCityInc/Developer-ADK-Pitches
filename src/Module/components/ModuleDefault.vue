@@ -262,7 +262,7 @@ export default defineComponent({
           IndexVal.value++;
           // eslint-disable-next-line no-plusplus
           display.value++;
-          await adkData.value.update();
+          await props.teamDoc.update();
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -285,7 +285,7 @@ export default defineComponent({
           IndexVal.value++;
           // eslint-disable-next-line no-plusplus
           display.value++;
-          await adkData.value.update();
+          await props.teamDoc.update();
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -294,7 +294,7 @@ export default defineComponent({
         } else {
           // console.log('duplicate data');
           // success = false;
-          await adkData.value.update();
+          await props.teamDoc.update();
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -331,11 +331,8 @@ export default defineComponent({
       // console.log(adkData.value.valueDrafts);
       finalDraftSaved.value = 'Final: Draft';
       display.value = IndexVal.value + 1;
-      props.teamDoc.update(() => ({
-        isComplete: true,
-        adkIndex
-      }));
-      await adkData.value.update(() => ({
+
+      await props.teamDoc.update(() => ({
         isComplete: true,
         adkIndex
       }));
