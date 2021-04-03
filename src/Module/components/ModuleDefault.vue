@@ -48,7 +48,7 @@
         <div class="mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn small rounded v-bind="attrs" dark color="blue" depressed v-on="on"
+              <v-btn small class="font-weight-bold" rounded v-bind="attrs" dark depressed v-on="on"
                 ><v-icon left>mdi-form-select</v-icon>
                 {{ finalDraftSaved + ' #' + display }}
               </v-btn>
@@ -56,9 +56,10 @@
             <v-card v-for="draft in adkData.valueDrafts.length" :key="draft" class="module__menu">
               <v-btn
                 v-if="draft > 1"
+                outlined
                 small
-                color="white"
-                class=""
+                class="draft-button mt-2 mb-1"
+                width="100%"
                 rounded
                 depressed
                 @click="showDraft(draft)"
@@ -163,8 +164,8 @@
             <v-btn
               x-large
               rounded
-              color="blue"
               dark
+              class="font-weight-bold"
               depressed
               :disabled="invalid || userType === 'stakeholder'"
               @click="finalDraft"
@@ -216,7 +217,7 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const initPitchesDefault = {
+    const initPitchDefault = {
       valueDrafts: [
         {
           onePitch: '',
@@ -231,8 +232,8 @@ export default defineComponent({
     const { adkData, adkIndex } = getModAdk(
       props,
       ctx.emit,
-      'Pitches',
-      initPitchesDefault,
+      'Pitch',
+      initPitchDefault,
       'teamDoc',
       'inputTeamDoc'
     );
@@ -329,7 +330,7 @@ export default defineComponent({
       // console.log(adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft);
       // adkData.value.valueDrafts.push(draft.value);
       // console.log(adkData.value.valueDrafts);
-      finalDraftSaved.value = 'Final: Draft';
+      finalDraftSaved.value = 'Final Draft';
       display.value = IndexVal.value + 1;
 
       await props.teamDoc.update(() => ({
@@ -359,7 +360,7 @@ export default defineComponent({
       // console.log(IndexVal.value);
       // console.log(adkData.value.valueDrafts[IndexVal.value].finalDraft);
       if (adkData.value.valueDrafts[IndexVal.value + 1].finalDraft === true) {
-        finalDraftSaved.value = 'Final: Draft';
+        finalDraftSaved.value = 'Final Draft';
         // console.log('this is a final draft');
       } else {
         finalDraftSaved.value = 'Draft';
@@ -409,6 +410,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.draft-button {
+  &.v-menu__content {
+    box-shadow: none;
+  }
+}
+
 .module-default {
   &__row {
     flex-direction: row;
