@@ -48,7 +48,7 @@
         <div class="mb-10">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn small class="font-weight-bold" rounded v-bind="attrs" dark depressed v-on="on"
+              <v-btn class="font-weight-bold" rounded v-bind="attrs" dark depressed v-on="on"
                 ><v-icon left>mdi-form-select</v-icon>
                 {{ finalDraftSaved + ' #' + display }}
               </v-btn>
@@ -63,7 +63,6 @@
                 rounded
                 @click="showDraft(draft)"
               >
-                <v-icon left color="#404142"> mdi-form-select </v-icon>
                 Draft #{{ adkData.valueDrafts.length - draft }}
               </v-btn>
               <!-- <v-divider></v-divider>
