@@ -141,7 +141,7 @@
         </validation-provider>
         <br />
         <div class="d-flex flex-row">
-          <div class="d-flex justify-start">
+          <div class="d-flex justify-start mr-auto">
             <v-btn
               v-if="disabledPastDraft == 0"
               :disabled="readonly || unmakeFD == 1"
@@ -162,7 +162,7 @@
           >
             Draft saved!
           </v-alert> -->
-          <div class="d-flex justify-end">
+          <div class="d-flex justify-end ml-auto">
             <v-btn
               v-if="unmakeFD == 0 && adkData.valueDrafts.length > 0"
               x-large
