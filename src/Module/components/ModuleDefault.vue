@@ -59,8 +59,8 @@
                 small
                 class="draft-button mt-2 mb-1"
                 width="100%"
-                rounded
                 depressed
+                rounded
                 @click="showDraft(draft)"
               >
                 <v-icon left color="#404142"> mdi-form-select </v-icon>
@@ -141,10 +141,10 @@
         </validation-provider>
         <br />
         <div class="d-flex flex-row">
-          <div>
+          <div class="d-flex justify-start">
             <v-btn
               v-if="disabledPastDraft == 0"
-              :disabled="userType === 'stakeholder'"
+              :disabled="readonly || unmakeFD == 1"
               rounded
               x-large
               outlined
@@ -162,31 +162,32 @@
           >
             Draft saved!
           </v-alert> -->
-          <div class="ml-auto">
+          <div class="d-flex justify-end">
             <v-btn
               v-if="unmakeFD == 0 && adkData.valueDrafts.length > 0"
               x-large
               rounded
               dark
+              color="#3c9dcd"
               class="font-weight-bold"
               depressed
-              :disabled="invalid || userType === 'stakeholder'"
+              :disabled="invalid || readonly"
               @click="finalDraft"
             >
               Make Final Draft
             </v-btn>
-          </div>
-          <div class="ml-auto">
             <v-btn
               v-if="unmakeFD == 1"
               :disabled="invalid || readonly"
               x-large
               rounded
+              dark
+              color="#ea6764"
               class="font-weight-bold"
               depressed
               @click="unmakeFinalDraft"
             >
-              Unmake Final Draft
+              Continue to Edit
             </v-btn>
           </div>
 
