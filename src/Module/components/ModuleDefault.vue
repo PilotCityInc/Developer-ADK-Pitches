@@ -143,13 +143,21 @@
           <div class="d-flex justify-start mr-auto">
             <v-btn
               v-if="disabledPastDraft == 0"
-              :disabled="readonly || unmakeFD == 1"
+              :disabled="readonly || unmakeFD == 1 || loading"
               rounded
               x-large
               outlined
               depressed
-              @click="process"
-              >Save Draft</v-btn
+              :loading="loading"
+              @click="draftSave"
+              ><v-icon v-if="success == true" left color="green" :value="success == true"
+                >mdi-check-bold</v-icon
+              >
+              <v-icon v-if="errorMsg == true" left color="red" :value="errorMsg == true"
+                >mdi-close-thick</v-icon
+              >
+
+              Save Draft</v-btn
             >
           </div>
           <!-- <v-alert
@@ -170,22 +178,30 @@
               color="#3c9dcd"
               class="font-weight-bold"
               depressed
-              :disabled="invalid || readonly"
+              :disabled="invalid || readonly || loading"
+              :loading="loading"
               @click="finalDraft"
             >
               Make Final Draft
             </v-btn>
             <v-btn
               v-if="unmakeFD == 1"
-              :disabled="invalid || readonly"
+              :disabled="invalid || readonly || loading"
               x-large
               rounded
               dark
               color="#ea6764"
               class="font-weight-bold"
               depressed
+              :loading="loading"
               @click="unmakeFinalDraft"
-            >
+              ><v-icon
+                v-if="finalDraftMsg == true"
+                color="white"
+                left
+                :value="finalDraftMsg == true"
+                >mdi-lead-pencil</v-icon
+              >
               Continue to Edit
             </v-btn>
           </div>
@@ -206,8 +222,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/composition-api';
-import { getModAdk, loading } from 'pcv4lib/src';
-import Swal from 'sweetalert2';
+import { getModAdk } from 'pcv4lib/src';
+// import Swal from 'sweetalert2';
 import Instruct from './ModuleInstruct.vue';
 import MongoDoc from '../types';
 
@@ -254,6 +270,12 @@ export default defineComponent({
     const finalDraftSaved = ref('Draft');
     const disabledPastDraft = ref(0);
     const unmakeFD = ref(0);
+    const loading = ref(false);
+
+    const success = ref(false);
+    const errorMsg = ref(false);
+    const finalDraftMsg = ref(false);
+    const unmakeFDMsg = ref(false);
 
     const onePitch = ref('');
     const elevatorPitch = ref('');
@@ -269,6 +291,9 @@ export default defineComponent({
     }
 
     async function draftSave() {
+      loading.value = true;
+      success.value = false;
+      errorMsg.value = false;
       const draftNum = adkData.value.valueDrafts.length - 1;
       const draft = ref({
         onePitch: onePitch.value,
@@ -288,15 +313,17 @@ export default defineComponent({
           // display.value++;
           // console.log(display.value);
           // success.value = true;
-          Swal.fire({
-            icon: 'success',
-            title: 'Draft saved',
-            text: 'Nice, keep it up!',
-            showConfirmButton: false,
-            timer: 2500,
-            allowOutsideClick: false
-          });
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: 'Draft saved',
+          //   text: 'Nice, keep it up!',
+          //   showConfirmButton: false,
+          //   timer: 2500,
+          //   allowOutsideClick: false
+          // });
           await props.teamDoc.update();
+          // loading.value = false;
+          success.value = true;
         } else if (
           onePitch.value !== adkData.value.valueDrafts[draftNum].onePitch ||
           elevatorPitch.value !== adkData.value.valueDrafts[draftNum].elevatorPitch
@@ -309,40 +336,44 @@ export default defineComponent({
           IndexVal.value++;
           // eslint-disable-next-line no-plusplus
           display.value++;
-          Swal.fire({
-            icon: 'success',
-            title: 'Draft saved!',
-            text: 'nice, keep it up!',
-            showConfirmButton: false,
-            timer: 2500,
-            allowOutsideClick: false
-          });
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: 'Draft saved!',
+          //   text: 'nice, keep it up!',
+          //   showConfirmButton: false,
+          //   timer: 2500,
+          //   allowOutsideClick: false
+          // });
           await props.teamDoc.update();
+          success.value = true;
         } else if (
           onePitch.value === adkData.value.valueDrafts[draftNum].onePitch ||
           elevatorPitch.value === adkData.value.valueDrafts[draftNum].elevatorPitch
         ) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Make sure you write something new!',
-            showConfirmButton: false,
-            timer: 2500,
-            allowOutsideClick: false
-          });
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Oops...',
+          //   text: 'Make sure you write something new!',
+          //   showConfirmButton: false,
+          //   timer: 2500,
+          //   allowOutsideClick: false
+          // });
           // console.log('duplicate data');
           // success = false;
+          errorMsg.value = true;
         }
       } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'You forgot to write something in!',
-          showConfirmButton: false,
-          timer: 2500,
-          allowOutsideClick: false
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Oops...',
+        //   text: 'You forgot to write something in!',
+        //   showConfirmButton: false,
+        //   timer: 2500,
+        //   allowOutsideClick: false
+        // });
+        errorMsg.value = true;
       }
+      loading.value = false;
     }
 
     const indexNum = '';
@@ -375,21 +406,23 @@ export default defineComponent({
       display.value = adkData.value.valueDrafts.length - 1;
       disabledPastDraft.value = 1;
       unmakeFD.value = 1;
-      Swal.fire({
-        icon: 'success',
-        title: 'Congratulations!',
-        text:
-          'You have marked this draft to be your final draft. If you need to make edits press the unmake final draft button.',
-        showConfirmButton: false,
-        timer: 2500,
-        allowOutsideClick: false
-      });
+      // Swal.fire({
+      //   icon: 'success',
+      //   title: 'Congratulations!',
+      //   text:
+      //     'You have marked this draft to be your final draft. If you need to make edits press the unmake final draft button.',
+      //   showConfirmButton: false,
+      //   timer: 2500,
+      //   allowOutsideClick: false
+      // });
       await props.teamDoc.update(() => ({
         isComplete: true,
         adkIndex
       }));
-      return props.teamDoc!.update();
-
+      props.teamDoc!.update();
+      props.teamDoc!.update();
+      loading.value = false;
+      finalDraftMsg.value = true;
       // IndexVal.value = adkData.value.valueDrafts.length - 1;
     }
 
@@ -429,28 +462,33 @@ export default defineComponent({
     }
 
     function unmakeFinalDraft() {
-      // console.log('unmakeFD');
-
-      Swal.fire({
-        icon: 'info',
-        title: 'Unmade Final Draft',
-        text:
-          'Draft is unmade as final draft. You can now make changes to this draft and continue to make new ones. Remember to mark one as final draft when you are done!',
-        showConfirmButton: false,
-        timer: 2500,
-        allowOutsideClick: false
-        // footer: 'asd'
-      });
-
-      adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft = false;
       unmakeFD.value = 0;
       disabledPastDraft.value = 0;
       finalDraftSaved.value = 'Draft';
-      props.teamDoc.update(() => ({
-        isComplete: false,
-        adkIndex
-      }));
-      return props.teamDoc!.update();
+      // console.log('unmakeFD');
+
+      // Swal.fire({
+      //   icon: 'info',
+      //   title: 'Unmade Final Draft',
+      //   text:
+      //     'Draft is unmade as final draft. You can now make changes to this draft and continue to make new ones. Remember to mark one as final draft when you are done!',
+      //   showConfirmButton: false,
+      //   timer: 2500,
+      //   allowOutsideClick: false
+      //   // footer: 'asd'
+      // });
+
+      adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft = false;
+      // unmakeFD.value = 0;
+      // disabledPastDraft.value = 0;
+      // finalDraftSaved.value = 'Draft';
+      // props.teamDoc.update(() => ({
+      //   isComplete: false,
+      //   adkIndex
+      // }));
+      props.teamDoc!.update();
+      loading.value = false;
+      unmakeFDMsg.value = true;
     }
 
     const setupInstructions = ref({
@@ -476,7 +514,12 @@ export default defineComponent({
       disabledPastDraft,
       unmakeFD,
       unmakeFinalDraft,
-      ...loading(draftSave)
+      // ...loading(draftSave)
+      loading,
+      errorMsg,
+      finalDraftMsg,
+      unmakeFDMsg,
+      success
     };
   }
   // setup() {
