@@ -294,6 +294,10 @@ export default defineComponent({
       loading.value = true;
       success.value = false;
       errorMsg.value = false;
+      setTimeout(() => {
+        loading.value = false;
+        // success.value = true;
+      }, 3000);
       const draftNum = adkData.value.valueDrafts.length - 1;
       const draft = ref({
         onePitch: onePitch.value,
@@ -373,7 +377,7 @@ export default defineComponent({
         // });
         errorMsg.value = true;
       }
-      loading.value = false;
+      // loading.value = false;
     }
 
     const indexNum = '';
@@ -381,6 +385,12 @@ export default defineComponent({
     const finalDraftIndex = ref('');
     async function finalDraft() {
       loading.value = true;
+      disabledPastDraft.value = 1;
+      setTimeout(() => {
+        loading.value = false;
+        unmakeFD.value = 1;
+        // success.value = true;
+      }, 3000);
       const draft = ref({
         onePitch: onePitch.value,
         elevatorPitch: elevatorPitch.value,
@@ -393,8 +403,7 @@ export default defineComponent({
 
       finalDraftSaved.value = 'Final Draft';
       display.value = adkData.value.valueDrafts.length - 1;
-      disabledPastDraft.value = 1;
-      unmakeFD.value = 1;
+
       // Swal.fire({
       //   icon: 'success',
       //   title: 'Congratulations!',
@@ -408,9 +417,9 @@ export default defineComponent({
         isComplete: true,
         adkIndex
       }));
-      props.teamDoc!.update();
+      // await props.teamDoc!.update();
       // props.teamDoc!.update();
-      loading.value = false;
+      // loading.value = false;
       finalDraftMsg.value = true;
       // console.log(adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1]);
       IndexVal.value = adkData.value.valueDrafts.length - 1;
@@ -451,10 +460,15 @@ export default defineComponent({
       return draft;
     }
 
-    function unmakeFinalDraft() {
+    async function unmakeFinalDraft() {
+      loading.value = true;
       unmakeFD.value = 0;
       disabledPastDraft.value = 0;
       finalDraftSaved.value = 'Draft';
+      setTimeout(() => {
+        loading.value = false;
+        // success.value = true;
+      }, 3000);
       // console.log('unmakeFD');
 
       // Swal.fire({
@@ -476,8 +490,8 @@ export default defineComponent({
       //   isComplete: false,
       //   adkIndex
       // }));
-      props.teamDoc!.update();
-      loading.value = false;
+      await props.teamDoc!.update();
+      // loading.value = false;
       unmakeFDMsg.value = true;
     }
 
