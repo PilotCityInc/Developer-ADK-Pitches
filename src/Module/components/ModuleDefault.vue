@@ -380,6 +380,7 @@ export default defineComponent({
 
     const finalDraftIndex = ref('');
     async function finalDraft() {
+      loading.value = true;
       const draft = ref({
         onePitch: onePitch.value,
         elevatorPitch: elevatorPitch.value,
@@ -389,19 +390,7 @@ export default defineComponent({
       });
       // console.log('saved final draft');
       adkData.value.valueDrafts.push(draft.value);
-      // console.log(adkData.value.valueDrafts[IndexVal.value].finalDraft);
-      // const submittedFinal = true;
-      // adkData.value.valueDrafts[IndexVal.value].draftIndex = IndexVal.value;
-      // console.log(adkData.value.valueDrafts[IndexVal.value].draftIndex);
-      // adkData.value.valueDrafts.splice(
-      //   adkData.value.valueDrafts.length - 1,
-      //   0,
-      //   adkData.value.valueDrafts[IndexVal.value]
-      // );
-      // adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft = true;
-      // console.log(adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1].finalDraft);
-      // adkData.value.valueDrafts.push(draft.value);
-      // console.log(adkData.value.valueDrafts);
+
       finalDraftSaved.value = 'Final Draft';
       display.value = adkData.value.valueDrafts.length - 1;
       disabledPastDraft.value = 1;
@@ -420,10 +409,11 @@ export default defineComponent({
         adkIndex
       }));
       props.teamDoc!.update();
-      props.teamDoc!.update();
+      // props.teamDoc!.update();
       loading.value = false;
       finalDraftMsg.value = true;
-      // IndexVal.value = adkData.value.valueDrafts.length - 1;
+      // console.log(adkData.value.valueDrafts[adkData.value.valueDrafts.length - 1]);
+      IndexVal.value = adkData.value.valueDrafts.length - 1;
     }
 
     function showDraft(draft: number) {
