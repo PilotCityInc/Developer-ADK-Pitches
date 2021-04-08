@@ -286,7 +286,7 @@ export default defineComponent({
       if (adkData.value.valueDrafts[IndexVal.value - 1].finalDraft === true) {
         disabledPastDraft.value = 1;
         unmakeFD.value = 1;
-        finalDraftSaved.value = 'Final';
+        finalDraftSaved.value = 'Final Draft';
       }
     }
 
