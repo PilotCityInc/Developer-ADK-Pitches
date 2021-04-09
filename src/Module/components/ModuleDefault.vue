@@ -189,19 +189,12 @@
               :disabled="invalid || readonly || loading"
               x-large
               rounded
-              dark
               color="#ea6764"
-              class="font-weight-bold"
+              class="font-weight-bold white--text"
               depressed
               :loading="loading"
               @click="unmakeFinalDraft"
-              ><v-icon
-                v-if="finalDraftMsg == true"
-                color="white"
-                left
-                :value="finalDraftMsg == true"
-                >mdi-lead-pencil</v-icon
-              >
+              ><v-icon color="white" left>mdi-lead-pencil</v-icon>
               Continue to Edit
             </v-btn>
           </div>
