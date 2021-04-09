@@ -174,9 +174,8 @@
               v-if="unmakeFD == 0 && adkData.valueDrafts.length > 0"
               x-large
               rounded
-              dark
               color="#3c9dcd"
-              class="font-weight-bold"
+              class="font-weight-bold white--text"
               depressed
               :disabled="invalid || readonly || loading"
               :loading="loading"
